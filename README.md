@@ -7,7 +7,9 @@
 
 ## 🌟 Overview
 
-Abraflix is a premium web application built to help you discover, explore, and stream your favorite movies and TV shows effortlessly. Featuring a stunning dark-mode glassmorphism design, Abraflix provides a seamless, immersive experience from discovery to playback.
+Abraflix is a premium web application built to help you discover, explore, and stream your favorite movies and TV shows effortlessly. Featuring a stunning Pastel & Liquid Glass design, Abraflix provides a seamless, immersive experience from discovery to playback.
+
+🚀 **Live Demo:** [https://abraflix.vercel.app/](https://abraflix.vercel.app/)
 
 ## ✨ Features
 
@@ -17,6 +19,7 @@ Abraflix is a premium web application built to help you discover, explore, and s
 - **"Surprise Me!" Feature:** Can't decide what to watch? Use the "Roll the Dice" button to randomly select a highly-rated movie based on your preferred genre and minimum rating.
 - **Detailed Insights:** View comprehensive details for any title, including cast members, runtime, release year, overviews, and similar recommendations.
 - **Seamless Streaming:** Watch movies and TV shows directly within the app using a built-in, fast, and ad-free video player (powered by Vidlink.pro).
+- **Theme Switcher:** Effortlessly switch between 4 gorgeous pastel themes (Soft Green, Pink, Blue, Lavender).
 
 ## 🛠️ Tech Stack
 
@@ -49,6 +52,8 @@ Create a `.env.local` file in the root of your project and add your TMDB API key
 NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
 ```
 *(You can get a free API key by creating an account at [The Movie Database](https://www.themoviedb.org/).)*
+
+> **Deploying to Vercel?** Ensure you add `NEXT_PUBLIC_TMDB_API_KEY` to your Environment Variables in your Vercel project settings, otherwise the data will fail to load!
 
 ### 4. Start the development server
 ```bash
