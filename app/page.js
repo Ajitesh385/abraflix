@@ -1,69 +1,165 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import SearchBar from "@/components/SearchBar";
+import RandomMovieButton from "@/components/RandomMovieButton";
+import { getTrending, getPosterUrl, getTopRated, getGenres } from "@/lib/tmdb";
+import Link from "next/link";
 
-export default function Home() {
+export default async function HomePage() {
+  const [trendingData, topRatedData, genresData] = await Promise.allSettled([
+    getTrending("movie", "day"),
+    getTopRated("movie", 1),
+    getGenres()
+  ]);
+
+  const trendingMovies = trendingData.status === "fulfilled" ? trendingData.value.results || [] : [];
+  const topRatedMovies = topRatedData.status === "fulfilled" ? topRatedData.value.results || [] : [];
+  const genres = genresData.status === "fulfilled" ? genresData.value || [] : [];
+
+  const handpicked = trendingMovies.slice(0, 4);
+  const top10Today = trendingMovies.slice(0, 10);
+  const topRated = topRatedMovies.slice(0, 10);
+  const topGenres = genres.slice(0, 12); 
+
+  const years = [2024, 2023, 2022, 2021, 2020, 2010, 2000, 1990];
+  
+  const providers = [
+    { id: 8, name: "Netflix", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
+    { id: 9, name: "Amazon Prime Video", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" },
+    { id: 337, name: "Disney+", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" },
+    { id: 384, name: "Max", logo: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Max_logo.svg" },
+    { id: 15, name: "Hulu", logo: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Hulu_Logo.svg" },
+    { id: 350, name: "Apple TV+", logo: "https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" },
+    { id: 531, name: "Paramount+", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg" }
+  ];
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="page-container">
+      <div className="new-hero">
+        <div className="new-hero-content">
+          <h1 className="hero-headline">see within</h1>
+          <SearchBar autoFocus className="new-search-bar" />
+          <div className="hero-actions">
+            <RandomMovieButton />
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      <section className="handpicked-section">
+        <div className="handpicked-header">
+          <h2>Handpicked for tonight</h2>
+          <Link href="/search?type=movie" className="view-all-link">View all</Link>
         </div>
-      </main>
+        <div className="handpicked-grid">
+          {handpicked.map((movie) => (
+            <Link href={`/movie/${movie.id}`} key={movie.id} className="handpicked-card">
+              <div className="handpicked-card-bg">
+                {movie.poster_path ? (
+                  <img src={getPosterUrl(movie.poster_path, "w500")} alt={movie.title} />
+                ) : null}
+                <div className="handpicked-card-overlay"></div>
+              </div>
+              <div className="handpicked-card-info">
+                <span className="handpicked-meta">
+                  TRENDING - {(movie.release_date || "").slice(0, 4)}
+                </span>
+                <h3 className="handpicked-title">{movie.title}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Top 10 Today */}
+      <section className="movie-row-section">
+        <div className="section-header">
+          <h2>Top 10 Today</h2>
+        </div>
+        <div className="movie-row-container">
+          {top10Today.map((movie, idx) => (
+             <MovieCard movie={movie} rank={idx + 1} key={movie.id} />
+          ))}
+        </div>
+      </section>
+
+      {/* Highest Rated */}
+      <section className="movie-row-section">
+        <div className="section-header">
+          <h2>Highest Rated</h2>
+        </div>
+        <div className="movie-row-container">
+          {topRated.map((movie) => (
+             <MovieCard movie={movie} key={movie.id} />
+          ))}
+        </div>
+      </section>
+
+      {/* Streaming Providers */}
+      <section className="movie-row-section">
+        <div className="section-header">
+          <h2>Available on Streaming</h2>
+        </div>
+        <div className="pill-row">
+          {providers.map(p => (
+            <Link href={`/search?provider=${p.id}&type=movie`} key={p.id} className="provider-logo" title={p.name}>
+               <img src={p.logo} alt={p.name} />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* By Genre */}
+      <section className="movie-row-section">
+        <div className="section-header">
+          <h2>Browse by Genre</h2>
+        </div>
+        <div className="pill-row">
+          {topGenres.map(g => (
+             <Link href={`/search?genre=${g.id}&type=movie`} key={g.id} className="genre-pill">
+               {g.name}
+             </Link>
+          ))}
+        </div>
+      </section>
+      
+      {/* By Year */}
+      <section className="movie-row-section">
+        <div className="section-header">
+          <h2>Browse by Year</h2>
+        </div>
+        <div className="pill-row">
+          {years.map(y => (
+             <Link href={`/search?year=${y}&type=movie`} key={y} className="genre-pill">
+               {y}
+             </Link>
+          ))}
+        </div>
+      </section>
     </div>
+  );
+}
+
+function MovieCard({ movie, rank }) {
+  return (
+    <Link href={`/movie/${movie.id}`} className="movie-card">
+      <div className="movie-poster-wrapper">
+        {movie.poster_path ? (
+          <img src={getPosterUrl(movie.poster_path, "w342")} alt={movie.title} loading="lazy" />
+        ) : (
+          <div className="no-poster" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: 'rgba(255,255,255,0.05)' }}>🎬</div>
+        )}
+        {rank && (
+          <div style={{
+            position: 'absolute', top: 8, left: 8, background: 'var(--color-lavender)', color: '#000',
+            fontWeight: 800, padding: '2px 8px', borderRadius: '8px', fontSize: '14px'
+          }}>
+            #{rank}
+          </div>
+        )}
+      </div>
+      <div className="movie-card-title" title={movie.title}>{movie.title}</div>
+      <div className="movie-card-meta">
+        {(movie.release_date || "").slice(0, 4)}
+        {movie.vote_average > 0 && ` • ⭐ ${movie.vote_average.toFixed(1)}`}
+      </div>
+    </Link>
   );
 }

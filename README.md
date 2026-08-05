@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <h1>🍿 Abraflix</h1>
+  <p><strong>A modern, sleek movie and TV show discovery and streaming platform.</strong></p>
+</div>
 
-## Getting Started
+---
 
-First, run the development server:
+## 🌟 Overview
 
+Abraflix is a premium web application built to help you discover, explore, and stream your favorite movies and TV shows effortlessly. Featuring a stunning dark-mode glassmorphism design, Abraflix provides a seamless, immersive experience from discovery to playback.
+
+## ✨ Features
+
+- **Rich Discovery Hub:** Browse curated categories on the homepage including "Top 10 Today," "Highest Rated," and "Handpicked for tonight."
+- **Advanced Filtering:** Dive deep into the catalog by browsing through specific genres, release years, or your favorite streaming providers (Netflix, Prime, Disney+, Max, etc.).
+- **Universal Search:** Quickly find any movie or TV show using the blazing-fast search engine.
+- **"Surprise Me!" Feature:** Can't decide what to watch? Use the "Roll the Dice" button to randomly select a highly-rated movie based on your preferred genre and minimum rating.
+- **Detailed Insights:** View comprehensive details for any title, including cast members, runtime, release year, overviews, and similar recommendations.
+- **Seamless Streaming:** Watch movies and TV shows directly within the app using a built-in, fast, and ad-free video player (powered by Vidlink.pro).
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Frontend Library:** [React](https://reactjs.org/)
+- **Styling:** Vanilla CSS with custom design tokens and glassmorphism aesthetics.
+- **Data Source:** [TMDB (The Movie Database) API](https://www.themoviedb.org/documentation/api)
+
+## 🚀 Getting Started
+
+Follow these steps to run Abraflix locally on your machine.
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Ajitesh385/abraflix.git
+cd abraflix
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Set up environment variables
+Create a `.env.local` file in the root of your project and add your TMDB API key:
+```env
+NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
+```
+*(You can get a free API key by creating an account at [The Movie Database](https://www.themoviedb.org/).)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Start the development server
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action!
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📝 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
