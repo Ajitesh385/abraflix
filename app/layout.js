@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('abraflix-theme') || 'soft-green';
+                  var savedTheme = localStorage.getItem('abraflix-theme');
+                  var supportedThemes = ['dark', 'light', 'ocean', 'forest', 'plum', 'rose'];
+                  var theme = supportedThemes.indexOf(savedTheme) !== -1 ? savedTheme : 'dark';
                   document.documentElement.setAttribute('data-theme', theme);
                 } catch (e) {}
               })();

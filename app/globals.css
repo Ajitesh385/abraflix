@@ -1305,3 +1305,192 @@ img {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ---------- Monochrome themes ---------- */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-primary: #000;
+  --bg-secondary: #000;
+  --bg-gradient-1: #000;
+  --bg-gradient-2: #000;
+  --text-primary: #fff;
+  --text-secondary: rgba(255, 255, 255, 0.76);
+  --text-tertiary: rgba(255, 255, 255, 0.58);
+  --accent: #fff;
+  --accent-soft: #fff;
+  --accent-glow: rgba(255, 255, 255, 0.16);
+  --orb-1: transparent;
+  --orb-2: transparent;
+  --orb-3: transparent;
+  --orb-4: transparent;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: #000;
+  --glass-bg-hover: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --glass-border-strong: #fff;
+  --glass-highlight: #fff;
+  --glass-shadow: none;
+  --glass-shadow-hover: none;
+  --card-overlay: rgba(0, 0, 0, 0.9);
+  --card-overlay-soft: rgba(0, 0, 0, 0.55);
+  --badge-movie-bg: rgba(255, 255, 255, 0.12);
+  --badge-movie-color: #fff;
+  --badge-tv-bg: rgba(255, 255, 255, 0.12);
+  --badge-tv-color: #fff;
+  --color-amber: #fff;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg-primary: #fff;
+  --bg-secondary: #fff;
+  --bg-gradient-1: #fff;
+  --bg-gradient-2: #fff;
+  --text-primary: #000;
+  --text-secondary: rgba(0, 0, 0, 0.76);
+  --text-tertiary: rgba(0, 0, 0, 0.58);
+  --accent: #000;
+  --accent-soft: #000;
+  --accent-glow: rgba(0, 0, 0, 0.12);
+  --orb-1: transparent;
+  --orb-2: transparent;
+  --orb-3: transparent;
+  --orb-4: transparent;
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-bg-strong: #fff;
+  --glass-bg-hover: rgba(0, 0, 0, 0.08);
+  --glass-border: rgba(0, 0, 0, 0.28);
+  --glass-border-strong: #000;
+  --glass-highlight: #000;
+  --glass-shadow: none;
+  --glass-shadow-hover: none;
+  --card-overlay: rgba(0, 0, 0, 0.9);
+  --card-overlay-soft: rgba(0, 0, 0, 0.55);
+  --badge-movie-bg: rgba(0, 0, 0, 0.08);
+  --badge-movie-color: #000;
+  --badge-tv-bg: rgba(0, 0, 0, 0.08);
+  --badge-tv-color: #000;
+  --color-amber: #000;
+}
+
+[data-theme="ocean"] {
+  color-scheme: dark;
+  --bg-primary: #071522;
+  --bg-secondary: #071522;
+  --bg-gradient-1: #071522;
+  --bg-gradient-2: #071522;
+  --text-primary: #e8f4ff;
+  --text-secondary: rgba(232, 244, 255, 0.76);
+  --text-tertiary: rgba(232, 244, 255, 0.58);
+  --accent: #e8f4ff;
+  --accent-soft: #e8f4ff;
+  --accent-glow: rgba(232, 244, 255, 0.16);
+  --glass-bg: rgba(232, 244, 255, 0.04);
+  --glass-bg-strong: #071522;
+  --glass-bg-hover: rgba(232, 244, 255, 0.1);
+  --glass-border: rgba(232, 244, 255, 0.28);
+  --glass-border-strong: #e8f4ff;
+  --glass-highlight: #e8f4ff;
+  --card-overlay: rgba(7, 21, 34, 0.9);
+  --card-overlay-soft: rgba(7, 21, 34, 0.55);
+  --badge-movie-bg: rgba(232, 244, 255, 0.12);
+  --badge-movie-color: #e8f4ff;
+  --badge-tv-bg: rgba(232, 244, 255, 0.12);
+  --badge-tv-color: #e8f4ff;
+  --color-amber: #e8f4ff;
+}
+
+[data-theme="forest"] {
+  color-scheme: dark;
+  --bg-primary: #0b1710;
+  --bg-secondary: #0b1710;
+  --bg-gradient-1: #0b1710;
+  --bg-gradient-2: #0b1710;
+  --text-primary: #edf8ef;
+  --text-secondary: rgba(237, 248, 239, 0.76);
+  --text-tertiary: rgba(237, 248, 239, 0.58);
+  --accent: #edf8ef;
+  --accent-soft: #edf8ef;
+  --accent-glow: rgba(237, 248, 239, 0.16);
+  --glass-bg: rgba(237, 248, 239, 0.04);
+  --glass-bg-strong: #0b1710;
+  --glass-bg-hover: rgba(237, 248, 239, 0.1);
+  --glass-border: rgba(237, 248, 239, 0.28);
+  --glass-border-strong: #edf8ef;
+  --glass-highlight: #edf8ef;
+  --card-overlay: rgba(11, 23, 16, 0.9);
+  --card-overlay-soft: rgba(11, 23, 16, 0.55);
+  --badge-movie-bg: rgba(237, 248, 239, 0.12);
+  --badge-movie-color: #edf8ef;
+  --badge-tv-bg: rgba(237, 248, 239, 0.12);
+  --badge-tv-color: #edf8ef;
+  --color-amber: #edf8ef;
+}
+
+[data-theme="plum"] {
+  color-scheme: dark;
+  --bg-primary: #170f1b;
+  --bg-secondary: #170f1b;
+  --bg-gradient-1: #170f1b;
+  --bg-gradient-2: #170f1b;
+  --text-primary: #f5edfa;
+  --text-secondary: rgba(245, 237, 250, 0.76);
+  --text-tertiary: rgba(245, 237, 250, 0.58);
+  --accent: #f5edfa;
+  --accent-soft: #f5edfa;
+  --accent-glow: rgba(245, 237, 250, 0.16);
+  --glass-bg: rgba(245, 237, 250, 0.04);
+  --glass-bg-strong: #170f1b;
+  --glass-bg-hover: rgba(245, 237, 250, 0.1);
+  --glass-border: rgba(245, 237, 250, 0.28);
+  --glass-border-strong: #f5edfa;
+  --glass-highlight: #f5edfa;
+  --card-overlay: rgba(23, 15, 27, 0.9);
+  --card-overlay-soft: rgba(23, 15, 27, 0.55);
+  --badge-movie-bg: rgba(245, 237, 250, 0.12);
+  --badge-movie-color: #f5edfa;
+  --badge-tv-bg: rgba(245, 237, 250, 0.12);
+  --badge-tv-color: #f5edfa;
+  --color-amber: #f5edfa;
+}
+
+[data-theme="rose"] {
+  color-scheme: dark;
+  --bg-primary: #1c1013;
+  --bg-secondary: #1c1013;
+  --bg-gradient-1: #1c1013;
+  --bg-gradient-2: #1c1013;
+  --text-primary: #fff0f1;
+  --text-secondary: rgba(255, 240, 241, 0.76);
+  --text-tertiary: rgba(255, 240, 241, 0.58);
+  --accent: #fff0f1;
+  --accent-soft: #fff0f1;
+  --accent-glow: rgba(255, 240, 241, 0.16);
+  --glass-bg: rgba(255, 240, 241, 0.04);
+  --glass-bg-strong: #1c1013;
+  --glass-bg-hover: rgba(255, 240, 241, 0.1);
+  --glass-border: rgba(255, 240, 241, 0.28);
+  --glass-border-strong: #fff0f1;
+  --glass-highlight: #fff0f1;
+  --card-overlay: rgba(28, 16, 19, 0.9);
+  --card-overlay-soft: rgba(28, 16, 19, 0.55);
+  --badge-movie-bg: rgba(255, 240, 241, 0.12);
+  --badge-movie-color: #fff0f1;
+  --badge-tv-bg: rgba(255, 240, 241, 0.12);
+  --badge-tv-color: #fff0f1;
+  --color-amber: #fff0f1;
+}
+
+:root,
+[data-theme="dark"],
+[data-theme="light"],
+[data-theme="ocean"],
+[data-theme="forest"],
+[data-theme="plum"],
+[data-theme="rose"] {
+  --glass-radius: 0;
+  --glass-radius-sm: 0;
+  --glass-radius-xs: 0;
+  --glass-radius-pill: 0;
+}

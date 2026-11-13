@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getMovieDetails, getPosterUrl, getBackdropUrl } from "@/lib/tmdb";
+import WatchlistButton from "@/components/WatchlistButton";
+import HistoryTracker from "@/components/HistoryTracker";
 
 export default async function MovieDetailPage({ params }) {
   const { id } = await params;
@@ -15,6 +17,7 @@ export default async function MovieDetailPage({ params }) {
 
   return (
     <div className="detail-page">
+      <HistoryTracker item={movie} />
       {/* Backdrop */}
       <div className="detail-backdrop">
         {backdropUrl && <img src={backdropUrl} alt="" />}
@@ -67,7 +70,7 @@ export default async function MovieDetailPage({ params }) {
               <p className="detail-overview">{movie.overview}</p>
             )}
 
-            <div className="detail-actions">
+            <div className="detail-actions" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <Link
                 href={`/watch/movie/${movie.id}`}
                 className="glass-button glass-button-primary glass-button-lg"
@@ -75,6 +78,7 @@ export default async function MovieDetailPage({ params }) {
               >
                 ▶ Watch Now
               </Link>
+              <WatchlistButton item={movie} />
             </div>
           </div>
         </div>

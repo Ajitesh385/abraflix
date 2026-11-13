@@ -2,6 +2,8 @@ import SearchBar from "@/components/SearchBar";
 import RandomMovieButton from "@/components/RandomMovieButton";
 import { getTrending, getPosterUrl, getTopRated, getGenres } from "@/lib/tmdb";
 import Link from "next/link";
+import DynamicHero from "@/components/DynamicHero";
+import MovieCard from "@/components/MovieCard";
 
 export default async function HomePage() {
   const [trendingData, topRatedData, genresData] = await Promise.allSettled([
@@ -17,10 +19,10 @@ export default async function HomePage() {
   const handpicked = trendingMovies.slice(0, 4);
   const top10Today = trendingMovies.slice(0, 10);
   const topRated = topRatedMovies.slice(0, 10);
-  const topGenres = genres.slice(0, 12); 
+  const topGenres = genres.slice(0, 12);
 
   const years = [2024, 2023, 2022, 2021, 2020, 2010, 2000, 1990];
-  
+
   const providers = [
     { id: 8, name: "Netflix", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
     { id: 9, name: "Amazon Prime Video", logo: "https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" },
@@ -33,15 +35,7 @@ export default async function HomePage() {
 
   return (
     <div className="page-container">
-      <div className="new-hero">
-        <div className="new-hero-content">
-          <h1 className="hero-headline">see within</h1>
-          <SearchBar autoFocus className="new-search-bar" />
-          <div className="hero-actions">
-            <RandomMovieButton />
-          </div>
-        </div>
-      </div>
+      <DynamicHero />
 
       <section className="handpicked-section">
         <div className="handpicked-header">
@@ -75,7 +69,7 @@ export default async function HomePage() {
         </div>
         <div className="movie-row-container">
           {top10Today.map((movie, idx) => (
-             <MovieCard movie={movie} rank={idx + 1} key={movie.id} />
+            <MovieCard movie={movie} rank={idx + 1} key={movie.id} />
           ))}
         </div>
       </section>
@@ -87,7 +81,7 @@ export default async function HomePage() {
         </div>
         <div className="movie-row-container">
           {topRated.map((movie) => (
-             <MovieCard movie={movie} key={movie.id} />
+            <MovieCard movie={movie} key={movie.id} />
           ))}
         </div>
       </section>
@@ -100,7 +94,7 @@ export default async function HomePage() {
         <div className="pill-row">
           {providers.map(p => (
             <Link href={`/search?provider=${p.id}&type=movie`} key={p.id} className="provider-logo" title={p.name}>
-               <img src={p.logo} alt={p.name} />
+              <img src={p.logo} alt={p.name} />
             </Link>
           ))}
         </div>
@@ -113,13 +107,13 @@ export default async function HomePage() {
         </div>
         <div className="pill-row">
           {topGenres.map(g => (
-             <Link href={`/search?genre=${g.id}&type=movie`} key={g.id} className="genre-pill">
-               {g.name}
-             </Link>
+            <Link href={`/search?genre=${g.id}&type=movie`} key={g.id} className="genre-pill">
+              {g.name}
+            </Link>
           ))}
         </div>
       </section>
-      
+
       {/* By Year */}
       <section className="movie-row-section">
         <div className="section-header">
@@ -127,39 +121,12 @@ export default async function HomePage() {
         </div>
         <div className="pill-row">
           {years.map(y => (
-             <Link href={`/search?year=${y}&type=movie`} key={y} className="genre-pill">
-               {y}
-             </Link>
+            <Link href={`/search?year=${y}&type=movie`} key={y} className="genre-pill">
+              {y}
+            </Link>
           ))}
         </div>
       </section>
     </div>
-  );
-}
-
-function MovieCard({ movie, rank }) {
-  return (
-    <Link href={`/movie/${movie.id}`} className="movie-card">
-      <div className="movie-poster-wrapper">
-        {movie.poster_path ? (
-          <img src={getPosterUrl(movie.poster_path, "w342")} alt={movie.title} loading="lazy" />
-        ) : (
-          <div className="no-poster" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: 'rgba(255,255,255,0.05)' }}>🎬</div>
-        )}
-        {rank && (
-          <div style={{
-            position: 'absolute', top: 8, left: 8, background: 'var(--color-lavender)', color: '#000',
-            fontWeight: 800, padding: '2px 8px', borderRadius: '8px', fontSize: '14px'
-          }}>
-            #{rank}
-          </div>
-        )}
-      </div>
-      <div className="movie-card-title" title={movie.title}>{movie.title}</div>
-      <div className="movie-card-meta">
-        {(movie.release_date || "").slice(0, 4)}
-        {movie.vote_average > 0 && ` • ⭐ ${movie.vote_average.toFixed(1)}`}
-      </div>
-    </Link>
   );
 }

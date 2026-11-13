@@ -10,31 +10,54 @@ export default function RandomMovieButton() {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [minRating, setMinRating] = useState(6);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
   const popoverRef = useRef(null);
 
   useEffect(() => {
-    getGenres().then(setGenres).catch(() => {});
+    let active = true;
+    getGenres()
+      .then((data) => {
+        if (active) setGenres(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load movie genres:", err);
+        if (active) setError("Genres could not be loaded. You can still pick any movie.");
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
-    function handleClickOutside(e) {
+    function handlePointerDown(e) {
       if (popoverRef.current && !popoverRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    function handleKeyDown(e) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   async function handleRoll() {
     setIsLoading(true);
+    setError("");
     try {
       // Fetch a random page of results
       const randomPage = Math.floor(Math.random() * 5) + 1;
       const data = await discoverMovies({
         genreId: selectedGenre || undefined,
-        minRating: minRating || undefined,
+        minRating: minRating > 0 ? minRating : undefined,
         page: randomPage,
       });
 
@@ -43,19 +66,23 @@ export default function RandomMovieButton() {
         const movie = data.results[randomIndex];
         setIsOpen(false);
         router.push(`/movie/${movie.id}`);
+      } else {
+        setError("No movies match those filters. Try lowering the rating.");
       }
     } catch (err) {
       console.error("Failed to get random movie:", err);
+      setError("Could not find a movie right now. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   return (
     <div className="surprise-wrapper" ref={popoverRef}>
       {isOpen && (
-        <div className="surprise-popover glass-strong">
+        <div className="surprise-popover glass-strong" id="surprise-popover">
           <div className="popover-field">
-            <label className="popover-label">Genre</label>
+            <label className="popover-label" htmlFor="genre-select">Genre</label>
             <select
               className="glass-select"
               value={selectedGenre}
@@ -69,6 +96,9 @@ export default function RandomMovieButton() {
                 </option>
               ))}
             </select>
+            {error && !isLoading && (
+              <p className="surprise-error" role="alert">{error}</p>
+            )}
           </div>
 
           <div className="popover-field">
@@ -88,6 +118,7 @@ export default function RandomMovieButton() {
           </div>
 
           <button
+            type="button"
             className="glass-button glass-button-primary glass-button-lg"
             onClick={handleRoll}
             disabled={isLoading}
@@ -107,8 +138,14 @@ export default function RandomMovieButton() {
       )}
 
       <button
+        type="button"
         className="glass-button surprise-btn-revamp"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setError("");
+          setIsOpen((open) => !open);
+        }}
+        aria-expanded={isOpen}
+        aria-controls="surprise-popover"
         id="surprise-me-button"
       >
         Surprise me

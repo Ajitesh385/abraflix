@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getTVDetails, getTVSeasonDetails, getPosterUrl, getBackdropUrl } from "@/lib/tmdb";
+import WatchlistButton from "@/components/WatchlistButton";
+import HistoryTracker from "@/components/HistoryTracker";
 
 export default async function TVDetailPage({ params }) {
   const { id } = await params;
@@ -22,6 +24,7 @@ export default async function TVDetailPage({ params }) {
 
   return (
     <div className="detail-page">
+      <HistoryTracker item={show} />
       {/* Backdrop */}
       <div className="detail-backdrop">
         {backdropUrl && <img src={backdropUrl} alt="" />}
@@ -69,7 +72,7 @@ export default async function TVDetailPage({ params }) {
               <p className="detail-overview">{show.overview}</p>
             )}
 
-            <div className="detail-actions">
+            <div className="detail-actions" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <Link
                 href={`/watch/tv/${show.id}/1/1`}
                 className="glass-button glass-button-primary glass-button-lg"
@@ -77,6 +80,7 @@ export default async function TVDetailPage({ params }) {
               >
                 ▶ Watch S1E1
               </Link>
+              <WatchlistButton item={show} />
             </div>
           </div>
         </div>

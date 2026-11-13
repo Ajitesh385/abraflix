@@ -28,7 +28,7 @@ export default function Navbar() {
           <Link
             href="/search?type=movie"
             className={`navbar-link new-link ${
-              pathname.startsWith("/movie") ? "active" : ""
+              pathname.startsWith("/movie") || pathname.includes("type=movie") ? "active" : ""
             }`}
           >
             Movies
@@ -38,10 +38,20 @@ export default function Navbar() {
           <Link
             href="/search?type=tv"
             className={`navbar-link new-link ${
-              pathname.startsWith("/tv") ? "active" : ""
+              pathname.startsWith("/tv") || pathname.includes("type=tv") ? "active" : ""
             }`}
           >
             TV Shows
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/library"
+            className={`navbar-link new-link ${
+              pathname.startsWith("/library") ? "active" : ""
+            }`}
+          >
+            Library
           </Link>
         </li>
       </ul>

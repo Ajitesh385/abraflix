@@ -3,19 +3,24 @@
 import { useState, useEffect, useRef } from "react";
 
 const THEMES = [
-  { id: "soft-green", name: "Soft Green", color: "#a5d6a7" },
-  { id: "soft-pink", name: "Soft Pink", color: "#f48fb1" },
-  { id: "soft-blue", name: "Soft Blue", color: "#90caf9" },
-  { id: "soft-lavender", name: "Soft Lavender", color: "#b39ddb" },
+  { id: "dark", name: "Dark", color: "#000000", border: "#ffffff" },
+  { id: "light", name: "Light", color: "#ffffff", border: "#000000" },
+  { id: "ocean", name: "Ocean", color: "#18a9c7", border: "#ffffff" },
+  { id: "forest", name: "Forest", color: "#37a866", border: "#ffffff" },
+  { id: "plum", name: "Plum", color: "#a568c7", border: "#ffffff" },
+  { id: "rose", name: "Rose", color: "#dd5d74", border: "#ffffff" },
 ];
 
 export default function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState("soft-green");
+  const [current, setCurrent] = useState("dark");
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("abraflix-theme") || "soft-green";
+    const savedTheme = localStorage.getItem("abraflix-theme");
+    const saved = THEMES.some((theme) => theme.id === savedTheme)
+      ? savedTheme
+      : "dark";
     setCurrent(saved);
     document.documentElement.setAttribute("data-theme", saved);
   }, []);
@@ -41,12 +46,14 @@ export default function ThemeSwitcher() {
     <div className="theme-switcher" ref={dropdownRef}>
       <button
         className="theme-toggle-btn"
-        onClick={() => setOpen(!open)}
-        aria-label="Change theme"
-        title="Change theme"
+        onClick={() => setOpen((isOpen) => !isOpen)}
+        aria-label="Change color theme"
+        aria-expanded={open}
+        aria-controls="theme-dropdown"
+        title="Change color theme"
         id="theme-toggle"
       >
-        🎨
+        {current === "dark" ? "☾" : "☀"}
       </button>
 
       {open && (
@@ -60,7 +67,11 @@ export default function ThemeSwitcher() {
             >
               <span
                 className="theme-swatch"
-                style={{ background: theme.color }}
+                style={{
+                  backgroundColor: theme.color,
+                  borderColor: theme.border,
+                }}
+                aria-hidden="true"
               />
               {theme.name}
             </button>
